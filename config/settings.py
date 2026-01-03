@@ -17,9 +17,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # External
+    'rest_framework',
     # Internal
-    'apps.reviews',
     'apps.users',
+    'apps.reviews',
+    'djoser'
 ]
 
 MIDDLEWARE = [
@@ -31,6 +34,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
+    ]
+}
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 ROOT_URLCONF = 'config.urls'
 
@@ -81,7 +95,6 @@ if not DEBUG:
 
 if DEBUG:
     AUTH_PASSWORD_VALIDATORS = []
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     CORS_ALLOW_ALL_ORIGINS = True
 
 
@@ -96,3 +109,5 @@ STATICFILES_DIRS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users.CustomUser"

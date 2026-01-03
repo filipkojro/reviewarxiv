@@ -1,1 +1,1 @@
-docker compose run -w /usr/src/app/ --rm backend "$@"
+docker compose run -w /usr/src/app/ --rm backend python3 manage.py "$@"

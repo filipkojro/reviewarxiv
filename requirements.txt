@@ -6,3 +6,6 @@ tzdata
 whitenoise
 environs
 djangorestframework
+Pillow
+djangorestframework-simplejwt
+djoser
