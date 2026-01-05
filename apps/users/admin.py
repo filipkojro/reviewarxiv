@@ -5,5 +5,5 @@ from apps.users.models import CustomUser
 # Register your models here.
 
 @admin.register(CustomUser)
-class UserAdmin(CustomUser):
+class UserAdmin(admin.ModelAdmin):
     pass
