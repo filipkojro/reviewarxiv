@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from .models import Review
+from django.urls import reverse_lazy
+from .models import Review, Comment
 
 # Create your views here.
 class TestView(TemplateView):
@@ -19,3 +20,9 @@ class TestView(TemplateView):
 class ReviewDetailView(DetailView):
     model = Review
     template_name = 'reviews/review_detail.html'
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    fields = ['content', 'user', 'review', 'parent']
+    template_name = "reviews/comment_form.html"
