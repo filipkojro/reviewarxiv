@@ -1,6 +1,7 @@
 <h2>{{object.title}}</h2>
 <p>{{object.user}}</p>
 <p>{{object.creation_date}}</p>
+
 <ul>
     {% for comment in object.comments.all%}
     <li>{{comment.content}} - {{comment.user}}</li>

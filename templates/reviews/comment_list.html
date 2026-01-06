@@ -1,0 +1,43 @@
+<h2>Lista Komentarzy</h2>
+{% if object_list %}
+    <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Autor</th>
+                <th>Treść</th>
+                <th>Recenzja</th>
+                <th>Odpowiedź do</th>
+                <th>Głosy</th>
+                <th>Data</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in object_list %}
+            <tr>
+                <td>{{ comment.user|default:"Nieznany" }}</td>
+                <td>{{ comment.content|truncatewords:10 }}</td>
+                <td>{{ comment.review }}</td>
+                <td>
+                    {% if comment.parent %}
+                        ID: {{ comment.parent.pk }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ comment.votes_count }}</td>
+                <td>{{ comment.creation_date|date:"d.m.Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'comment_detail' pk=comment.pk %}">Szczegóły</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Brak komentarzy</p>
+{% endif %}
+
+<p style="margin-top: 20px;">
+    <a href="{% url 'comment_create' %}">Dodaj Nowy Komentarz</a>
+</p>

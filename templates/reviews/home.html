@@ -4,7 +4,10 @@
             <h2>{{review.title}}</h2>
             <a href="{% url 'review_detail' review.pk %}">{{review.article_doi}}</a>
             <p>{{review.content}}</p>
-            <b>votes +{{review.upvotes}} -{{review.downvotes}}</b>
+
+            {% for comment in review.comments%}
+            <p>{{comment.title}}</p>
+            {% endfor %}
         {% endfor %}
     </body>
 </html>
