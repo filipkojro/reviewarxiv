@@ -1,13 +1,12 @@
-<html>
-    <body>
-        {% for review in reviews %}
-            <h2>{{review.title}}</h2>
-            <a href="{% url 'review_detail' review.pk %}">{{review.article_doi}}</a>
-            <p>{{review.content}}</p>
+{% extends "reviews/base.html" %}
 
-            {% for comment in review.comments%}
-            <p>{{comment.title}}</p>
-            {% endfor %}
-        {% endfor %}
-    </body>
-</html>
+{% block content %}
+
+{% for review in reviews %}
+    <a href="{% url 'review_detail' review.pk %}"><h2>{{review.title}}</h2></a>
+    <a href="https://{{review.article_doi}}">{{review.article_doi}}</a>
+    <p>{{review.content}}</p>
+
+{% endfor %}
+
+{% endblock content %}

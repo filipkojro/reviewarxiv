@@ -1,3 +1,7 @@
+{% extends "reviews/base.html" %}
+
+{% block content %}
+
 <h2>{{object.title}}</h2>
 <p>{{object.user}}</p>
 <p>{{object.creation_date}}</p>
@@ -7,3 +11,5 @@
     <li>{{comment.content}} - {{comment.user}}</li>
     {% endfor %}
 </ul>
+
+{% endblock content %}

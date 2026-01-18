@@ -1,3 +1,7 @@
+{% extends "reviews/base.html" %}
+
+{% block content %}
+
 <h2>Lista Komentarzy</h2>
 {% if object_list %}
     <table border="1" style="width: 100%; border-collapse: collapse;">
@@ -41,3 +45,5 @@
 <p style="margin-top: 20px;">
     <a href="{% url 'comment_create' %}">Dodaj Nowy Komentarz</a>
 </p>
+
+{% endblock content %}
