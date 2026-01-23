@@ -12,9 +12,9 @@ class Review(models.Model):
     )
 
     title = models.CharField(max_length=200)
+    article_doi = models.CharField(max_length=200)
     content = models.TextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    article_doi = models.CharField(max_length=200)
 
     votes_count = models.IntegerField(default=0)
 
