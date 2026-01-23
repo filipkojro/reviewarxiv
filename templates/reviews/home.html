@@ -3,9 +3,25 @@
 {% block content %}
 
 {% for review in reviews %}
-    <a href="{% url 'review_detail' review.pk %}"><h2>{{review.title}}</h2></a>
-    <a href="https://{{review.article_doi}}">{{review.article_doi}}</a>
+<article>
+    <a href="{% url 'review_detail' review.pk %}">
+        <h2>{{review.title}}</h2>
+    </a>
+    <small>
+        <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{review.user.username}}</a> | 
+        <a href="https://{{review.article_doi}}">{{review.article_doi}}</a>
+    </small>
+
     <p>{{review.content}}</p>
+        <div>
+            <a href="{% url 'comment_create' %}" class="contrast">Comments</a>
+            <a href="{% url 'comment_create' %}" class="contrast"></a>
+            <a href="{% url 'comment_create' %}" class="contrast"></a>
+        </div>
+
+        <!-- <a href="https://{{review.article_doi}}">Comments</a> -->
+</article>
+
 
 {% endfor %}
 

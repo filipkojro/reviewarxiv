@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>ReviewArxiv</title>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+<head>
+    <title>ReviewArxiv</title>
 
-        {% block headers %}{% endblock headers %}
-    </head>
-    <body style="width: 80%; margin: auto;">
-        <h1 style="margin-top: 1rem;">Review Arxiv</h1>
-        <hr>
-        {% block content %}{% endblock content %}
-    </body>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+
+    {% block headers %}{% endblock headers %}
+</head>
+
+<body style="width: 80%; margin: auto;">
+    <nav>
+        <ul>
+            <li><a href="{% url 'home_page' %}" class="contrast"><h1>ReviewArxiv</h1></a></li>
+        </ul>
+        <ul>
+            <li><a href="#" class="contrast">My Profile</a></li>
+        </ul>
+    </nav>
+    
+    {% block content %}{% endblock content %}
+</body>
+
 </html>

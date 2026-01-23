@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.urls import path, include
 
 from apps.reviews.views import HomePageView, ReviewDetailView, CommentListView, CommentCreateView, ReviewCreateView, ReviewListView
-from apps.users.views import TestViewUsers
+from apps.users.views import TestViewUsers, UserDetailView
 
 urlpatterns = [
     
-    path("user/", TestViewUsers.as_view(), name="usersssss"),
+    path("users/", TestViewUsers.as_view(), name="usersssss"),
     path("admin/", admin.site.urls),
 
     # only for easier development, remove before deploy
@@ -18,4 +18,5 @@ urlpatterns = [
 
 
     path("", HomePageView.as_view(), name="home_page"),
+    path("user/<str:username>/", UserDetailView.as_view(), name="user_detail"),
 ]

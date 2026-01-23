@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 
 from .models import CustomUser
 
@@ -15,3 +15,9 @@ class TestViewUsers(TemplateView):
 
         return context
 
+class UserDetailView(DetailView):
+    model = CustomUser
+    template_name = 'users/user_detail.html'
+
+    slug_field = "username"
+    slug_url_kwarg = "username"

@@ -3,6 +3,10 @@
 {% block content %}
 
 <h2>{{object.title}}</h2>
+<small>
+    <a href="" class="secondary">{{object.user.username}}</a> | 
+    <a href="https://{{object.article_doi}}">{{review.article_doi}}</a>
+</small>
 <p>{{object.user}}</p>
 <p>{{object.creation_date}}</p>
 
