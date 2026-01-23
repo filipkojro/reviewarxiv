@@ -27,6 +27,7 @@ class CommentCreateView(CreateView):
     template_name = "reviews/just_form.html"
     success_url = reverse_lazy('comment_list')
 
+
 class ReviewListView(ListView):
     model = Review
     template_name = "reviews/review_list.html"
@@ -34,7 +35,7 @@ class ReviewListView(ListView):
 class ReviewCreateView(CreateView):
     model = Review
     fields = ['title', 'content', 'user', 'article_doi']
-    template_name = "reviews/just_form.html"
+    template_name = "reviews/review_create.html"
     success_url = reverse_lazy('review_list')
 
 class ReviewDetailView(DetailView):
