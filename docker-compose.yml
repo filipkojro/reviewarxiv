@@ -1,21 +1,21 @@
 services:
   backend:
-      build: .
-      volumes:
-        - .:/usr/src/app/
-      ports:
-        - "8000:8000"
-      depends_on:
-        - db
-      env_file:
-        - ./config/.env
+    build: .
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./config/.env
 
   db:
     image: postgres:16.4-bullseye
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     env_file:
       - .env.db
 

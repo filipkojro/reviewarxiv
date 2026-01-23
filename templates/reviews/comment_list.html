@@ -4,7 +4,7 @@
 
 <h2>Lista Komentarzy</h2>
 {% if object_list %}
-    <table border="1" style="width: 100%; border-collapse: collapse;">
+    <table>
         <thead>
             <tr>
                 <th>Autor</th>
@@ -42,8 +42,6 @@
     <p>Brak komentarzy</p>
 {% endif %}
 
-<p style="margin-top: 20px;">
-    <a href="{% url 'comment_create' %}">Dodaj Nowy Komentarz</a>
-</p>
+<a href="{% url 'comment_create' %}" role="button">Dodaj Nowy Komentarz</a>
 
 {% endblock content %}

@@ -4,7 +4,7 @@
 
 <h2>Lista Recenzji</h2>
 {% if object_list %}
-    <table border="1" style="width: 100%; border-collapse: collapse;">
+    <table>
         <thead>
             <tr>
                 <th>Tytuł</th>
@@ -34,8 +34,6 @@
     <p>Brak recenzji</p>
 {% endif %}
 
-<p style="margin-top: 20px;">
-    <a href="{% url 'review_create' %}">Dodaj Nową Recenzję</a>
-</p>
+<a href="{% url 'review_create' %}" role="button">Dodaj Nową Recenzję</a>
 
 {% endblock content %}
