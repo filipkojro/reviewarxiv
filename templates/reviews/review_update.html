@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<h2>Create review</h2>
+<h2>Update review</h2>
 
 <form method="post">
     {% csrf_token %}
 
     {{ form.as_p }}
 
-    <button type="submit" style="width: fit-content;">save</button>
+    <button type="submit" style="width: fit-content;">update</button>
 </form>
 
 {% endblock content %}

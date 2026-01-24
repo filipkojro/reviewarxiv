@@ -10,7 +10,8 @@
     <p>{{review.content}}</p>
         <div>
             <a href="{% url 'comment_create' %}" class="contrast">Comments</a>
-            <a href="{% url 'comment_create' %}" class="contrast"></a>
-            <a href="{% url 'comment_create' %}" class="contrast"></a>
+            {% if review.user == user %}
+            <a href="{% url 'review_update' review.pk %}" class="contrast">Edit</a>
+            {% endif %}
         </div>
 </article>

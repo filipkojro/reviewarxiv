@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Review, Comment
 
@@ -43,6 +43,16 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+class ReviewUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+    model = Review
+    fields = ['title', 'content','article_doi']
+    template_name = "reviews/review_update.html"
+    success_url = reverse_lazy('review_list')
+
+    def test_func(self):
+        review = self.get_object()
+        return self.request.user == review.user
 
 class ReviewDetailView(LoginRequiredMixin, DetailView):
     model = Review
