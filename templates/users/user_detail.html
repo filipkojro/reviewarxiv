@@ -2,6 +2,16 @@
 
 {% block content %}
 
-<h2>{{object.username}}</h2>
+<h2>Hello {{object.username}}</h2>
+
+<div>
+    <p><a href="{% url 'password_change'%}" role="button" type="reset">Change password</a></p>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" style="width: fit-content;">Log Out</button>
+    </form>
+</div>
+
+
 
 {% endblock content %}

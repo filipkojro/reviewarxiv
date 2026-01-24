@@ -12,7 +12,7 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        reviews = Review.objects.select_related("user").all()
+        reviews = Review.objects.select_related("user").order_by("-creation_date")[:20]
         context['reviews'] = reviews
 
         return context
@@ -36,9 +36,13 @@ class ReviewListView(ListView):
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
-    fields = ['title', 'content', 'user', 'article_doi']
+    fields = ['title', 'content','article_doi']
     template_name = "reviews/review_create.html"
     success_url = reverse_lazy('review_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class ReviewDetailView(LoginRequiredMixin, DetailView):
     model = Review
