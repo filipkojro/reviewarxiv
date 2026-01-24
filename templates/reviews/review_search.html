@@ -2,10 +2,20 @@
 
 {% block content %}
 
+{% if reviews %}
+
+<h2>Reviews for {{query}}</h2>
+
 {% for review in reviews %}
 
-{% include "reviews/_review_card.html" %}
+{% include "reviews/_review_card.html" with review=review %}
 
 {% endfor %}
+
+{% else %}
+
+<h2>Can't find any reviews for {{query}}</h2>
+
+{% endif %}
 
 {% endblock content %}

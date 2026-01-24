@@ -55,6 +55,8 @@ class ReviewSearch(TemplateView):
         context = super().get_context_data(**kwargs)
 
         query = self.request.GET.get('search')
+        context['query'] = query
+
         if query:
             reviews = Review.objects.select_related("user").filter(article_doi__icontains=query).order_by("-creation_date")[:20]
         else:

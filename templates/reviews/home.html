@@ -13,7 +13,7 @@
 
 {% for review in reviews %}
 
-{% include "reviews/_review_card.html" %}
+{% include "reviews/_review_card.html" with review=review %}
 
 {% endfor %}
 
