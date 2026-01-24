@@ -2,26 +2,18 @@
 
 {% block content %}
 
+<h2>Search by doi</h2>
+
+<form action="{% url 'review_search' %}" method="get" role="search">
+  <input name="search" type="search" placeholder="doi" />
+  <input type="submit" value="Search"/>
+</form>
+
 <h2>Latest reviews</h2>
 
 {% for review in reviews %}
-<article>
-    <a href="{% url 'review_detail' review.pk %}">
-        <h3>{{review.title}}</h3>
-    </a>
-    <small>
-        <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{review.user.username}}</a> | 
-        <a href="https://{{review.article_doi}}">{{review.article_doi}}</a>
-    </small>
 
-    <p>{{review.content}}</p>
-        <div>
-            <a href="{% url 'comment_create' %}" class="contrast">Comments</a>
-            <a href="{% url 'comment_create' %}" class="contrast"></a>
-            <a href="{% url 'comment_create' %}" class="contrast"></a>
-        </div>
-</article>
-
+{% include "reviews/_review_card.html" %}
 
 {% endfor %}
 

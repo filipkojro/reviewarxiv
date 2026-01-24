@@ -2,6 +2,10 @@
 
 {% block content %}
 
+
+
+{% if user.username == object.username %}
+
 <h2>Hello {{object.username}}</h2>
 
 <div>
@@ -12,6 +16,11 @@
     </form>
 </div>
 
+{% else %}
+
+<h2>User {{object.username}}</h2>
+
+{% endif %}
 
 
 {% endblock content %}

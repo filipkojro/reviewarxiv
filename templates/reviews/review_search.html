@@ -1,0 +1,11 @@
+{% extends "reviews/base.html" %}
+
+{% block content %}
+
+{% for review in reviews %}
+
+{% include "reviews/_review_card.html" %}
+
+{% endfor %}
+
+{% endblock content %}

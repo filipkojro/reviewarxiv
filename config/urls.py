@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from apps.reviews.views import HomePageView, ReviewDetailView, CommentListView, CommentCreateView, ReviewCreateView, ReviewListView
+from apps.reviews.views import HomePageView, ReviewDetailView, CommentListView, CommentCreateView, ReviewCreateView, ReviewListView, ReviewSearch
 from apps.users.views import TestViewUsers, UserDetailView, RegisterView
 
 from django.contrib.auth import views as auth_views
@@ -30,4 +30,6 @@ urlpatterns = [
 
     path("review/<uuid:pk>/", ReviewDetailView.as_view(), name="review_detail"),
     path("review/create/", ReviewCreateView.as_view(), name='review_create'),
+
+    path("review/search/", ReviewSearch.as_view(), name="review_search"),
 ]

@@ -47,3 +47,19 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 class ReviewDetailView(LoginRequiredMixin, DetailView):
     model = Review
     template_name = 'reviews/review_detail.html'
+
+class ReviewSearch(TemplateView):
+    template_name = "reviews/review_search.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        query = self.request.GET.get('search')
+        if query:
+            reviews = Review.objects.select_related("user").filter(article_doi__icontains=query).order_by("-creation_date")[:20]
+        else:
+            reviews = None
+
+        context['reviews'] = reviews
+
+        return context
