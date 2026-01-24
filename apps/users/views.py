@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, DetailView
-
+from django.views.generic import TemplateView, DetailView, CreateView
+from .forms import CustomUserCreationForm
 from .models import CustomUser
-
+from django.urls import reverse_lazy
 # Create your views here.
 class TestViewUsers(TemplateView):
     template_name = 'users/users_list.html'
@@ -21,3 +21,8 @@ class UserDetailView(DetailView):
 
     slug_field = "username"
     slug_url_kwarg = "username"
+
+class RegisterView(CreateView):
+    template_name = "registration/register.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("login")

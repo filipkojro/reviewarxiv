@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 from apps.reviews.views import HomePageView, ReviewDetailView, CommentListView, CommentCreateView, ReviewCreateView, ReviewListView
-from apps.users.views import TestViewUsers, UserDetailView
+from apps.users.views import TestViewUsers, UserDetailView, RegisterView
+
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     
@@ -15,8 +17,10 @@ urlpatterns = [
     path("comments/create/", CommentCreateView.as_view(), name='comment_create'),
     # path("reviews/create/", ReviewCreateView.as_view(), name='review_create'),
 
+    path("login/", auth_views.LoginView.as_view(), name='login'),
+    path("register/", RegisterView.as_view(), name='register'),
 
-    path("", HomePageView.as_view(), name="home_page"),
+    path("", HomePageView.as_view(), name="home"),
 
     path("user/<str:username>/", UserDetailView.as_view(), name="user_detail"),
 
