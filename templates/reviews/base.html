@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
 
 <head>
     <title>ReviewArxiv</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.blue.min.css">
 
     {% block headers %}{% endblock headers %}
 </head>
@@ -12,14 +12,36 @@
 <body style="width: 80%; margin: auto;">
     <nav>
         <ul>
-            <li><a href="{% url 'home' %}" class="contrast"><h1>ReviewArxiv</h1></a></li>
+            <li><a href="{% url 'home' %}" class="contrast">
+                    <h1>ReviewArxiv</h1>
+                </a></li>
         </ul>
+        {% if user.is_authenticated %}
         <ul>
             <li><a href="{% url 'review_create' %}" class="contrast">+ New Review</a></li>
-            <li><a href="#" class="contrast">My Profile</a></li>
+            <details class="dropdown">
+                <summary>{{user.username}}</summary>
+                <ul>
+                    <li><a href="{% url 'user_detail' user.username %}">My Profile</a></li>
+                    <li>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Log Out
+                        </a>
+
+                        <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                    </li>
+                </ul>
+            </details>
         </ul>
+        {% else %}
+        <ul>
+            <li><a href="{% url 'login' %}">Log in</a></li>
+        </ul>
+        {% endif %}
     </nav>
-    
+
     {% block content %}{% endblock content %}
 </body>
 

@@ -17,8 +17,9 @@ urlpatterns = [
     path("comments/create/", CommentCreateView.as_view(), name='comment_create'),
     # path("reviews/create/", ReviewCreateView.as_view(), name='review_create'),
 
-    path("login/", auth_views.LoginView.as_view(), name='login'),
     path("register/", RegisterView.as_view(), name='register'),
+    path("login/", auth_views.LoginView.as_view(), name='login'),
+    path('logged_out/', auth_views.LogoutView.as_view(), name='logout'),
 
     path("", HomePageView.as_view(), name="home"),
 
