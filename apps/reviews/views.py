@@ -1,10 +1,10 @@
 from django.views.generic import TemplateView
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.shortcuts import get_object_or_404
 from .models import Review, Comment
-
+import uuid
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = "reviews/home.html"
@@ -25,9 +25,34 @@ class CommentListView(ListView):
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
-    fields = ['content', 'user', 'review', 'parent']
-    template_name = "reviews/just_form.html"
-    success_url = reverse_lazy('comment_list')
+    fields = ['content']
+    template_name = "reviews/comment_create.html"
+
+    def form_valid(self, form):
+        review_uuid = self.kwargs['review']
+
+        form.instance.review = get_object_or_404(Review, pk=review_uuid)
+
+        form.instance.user = self.request.user
+
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse('review_detail', kwargs={'pk': self.kwargs['review']})
+
+
+class CommentUpdateView(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = ['content']
+    template_name = "reviews/comment_create.html"
+    
+    def get_success_url(self):
+        return reverse('review_detail', kwargs={'pk': self.kwargs['review']})
+    
+    def form_valid(self, form):
+        form.instance.has_beed_edited = True
+        return super().form_valid(form)
+
 
 class CommentDetailView(LoginRequiredMixin, DetailView):
     model = Comment

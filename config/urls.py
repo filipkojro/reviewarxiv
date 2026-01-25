@@ -1,7 +1,20 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from apps.reviews.views import HomePageView, ReviewDetailView, CommentListView, CommentCreateView,CommentDetailView, ReviewCreateView, ReviewUpdateView, ReviewListView, ReviewSearch
+from apps.reviews.views import (
+    HomePageView,
+    ReviewDetailView,
+    ReviewCreateView,
+    ReviewUpdateView,
+    ReviewListView,
+    ReviewSearch,
+
+    CommentListView,
+    CommentCreateView,
+    CommentDetailView,
+    CommentUpdateView,
+    )
+
 from apps.users.views import TestViewUsers, UserDetailView, RegisterView
 
 from django.contrib.auth import views as auth_views
@@ -32,6 +45,7 @@ urlpatterns = [
     path("review/<uuid:pk>/update", ReviewUpdateView.as_view(), name="review_update"),
 
     path("review/<uuid:review>/comment/", CommentCreateView.as_view(), name='review_comment_create'),
+    path("review/<uuid:review>/<uuid:pk>/", CommentUpdateView.as_view(), name='review_comment_update'),
 
     path("review/search/", ReviewSearch.as_view(), name="review_search"),
 ]

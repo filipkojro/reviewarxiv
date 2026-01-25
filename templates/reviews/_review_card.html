@@ -18,9 +18,6 @@
     </small>
 
         <div>
-            <a href="{% url 'comment_create' %}" class="contrast">Comments</a>
-            {% if review.user == user %}
-            <a href="{% url 'review_update' review.pk %}" class="contrast">Edit</a>
-            {% endif %}
+            <a href="{% url 'review_detail' review.pk %}" class="contrast">Comments</a>
         </div>
 </article>

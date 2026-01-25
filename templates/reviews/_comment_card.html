@@ -1,13 +1,18 @@
 <article>
     <small>
         <a href="{% url 'user_detail' comment.user.username %}" class="secondary">{{comment.user.username}}</a>
+        {% if comment.has_beed_edited %}
+            updated {{comment.update_date}}
+        {% else %}
+        created {{comment.creation_date}}
+        {% endif %}
     </small>
 
     <p>{{comment.content}}</p>
         <div>
-            <a href="{% url 'comment_create' %}" class="contrast">Discuss</a>
+            <a href="#" class="contrast">Discuss</a>
             {% if comment.user == user %}
-            <a href="{% url 'comment_update' comment.pk %}" class="contrast">Edit</a>
+            <a href="{% url 'review_comment_update' comment.review.pk comment.pk %}" class="contrast">Edit</a>
             {% endif %}
         </div>
 </article>
