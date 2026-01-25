@@ -42,20 +42,8 @@ class ReviewListView(ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        direction = self.request.GET.get("direction", "desc")
-        queryset = super().get_queryset()
+        return super().get_queryset().order_by('-creation_date')
 
-        if direction == "asc":
-             return queryset.order_by('creation_date')
-        elif direction == "desc":
-            return queryset.order_by('-creation_date')
-
-        return queryset
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['current_direction'] = self.request.GET.get("direction", "desc")
-        return context
 
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
