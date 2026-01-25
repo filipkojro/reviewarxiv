@@ -7,7 +7,7 @@
         <div>
             <a href="{% url 'comment_create' %}" class="contrast">Discuss</a>
             {% if comment.user == user %}
-            <a href="{% url 'review_update' review.pk %}" class="contrast">Edit</a>
+            <a href="{% url 'comment_update' comment.pk %}" class="contrast">Edit</a>
             {% endif %}
         </div>
 </article>

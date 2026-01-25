@@ -3,18 +3,31 @@
 {% block content %}
 
 <h2>{{object.title}}</h2>
+
 <small>
-    <a href="" class="secondary">{{object.user.username}}</a> | 
-    <a href="{{object.article_doi}}">{{review.article_doi}}</a>
+    About: <a href="{{review.article_doi}}">{{object.article_doi}}</a>
 </small>
-<p>{{object.user}}</p>
-<p>{{object.creation_date}}</p>
+
+<p>{{object.content}}</p>
+
+<small>
+    <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{object.user.username}}</a>
+    {% if object.has_beed_edited %}
+    updated {{object.update_date}}
+    {% else %}
+    created {{object.creation_date}}
+    {% endif %}
+</small>
+
+{% if object.user == user %}
+<a href="{% url 'review_update' object.pk %}" class="contrast">Edit</a>
+{% endif %}
 
 <h3>comments</h3>
 
-{% for comment in object.comments.all %}
+<a href="{% url 'review_comment_create' object.pk %}" role="button">Add comment</a>
 
-<p>{{comment.content}}</p>
+{% for comment in object.comments.all %}
 
 {% include "reviews/_comment_card.html" with comment=comment user=user%}
 

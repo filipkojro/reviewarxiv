@@ -15,7 +15,7 @@ class Review(models.Model):
     article_doi = models.CharField(max_length=200)
     content = models.TextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-
+    
     votes_count = models.IntegerField(default=0)
 
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -36,6 +36,13 @@ class ReviewVote(models.Model):
 
 
 class Comment(models.Model):
+
+    id = models.UUIDField(
+        primary_key=True, 
+        default=uuid.uuid4, 
+        editable=False
+    )
+
     content = models.TextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     review = models.ForeignKey(
@@ -56,6 +63,8 @@ class Comment(models.Model):
 
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+
+    has_beed_edited = models.BooleanField(default=False)
 
     class Meta:
         indexes = [

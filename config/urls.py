@@ -11,11 +11,10 @@ urlpatterns = [
     path("users/", TestViewUsers.as_view(), name="usersssss"),
     path("admin/", admin.site.urls),
 
-    # only for easier development, remove before deploy
     path("reviews/", ReviewListView.as_view(), name="review_list"),
-    path("comments/", CommentListView.as_view(), name="comment_list"),
-    path("comments/create/", CommentCreateView.as_view(), name='comment_create'),
-    path("comments/<int:pk>/", CommentDetailView.as_view(), name="comment_detail"),
+    # path("comments/", CommentListView.as_view(), name="comment_list"),
+    
+    path("comments/<uuid:pk>/", CommentDetailView.as_view(), name="comment_detail"),
 
     path("register/", RegisterView.as_view(), name='register'),
     path("login/", auth_views.LoginView.as_view(), name='login'),
@@ -31,6 +30,8 @@ urlpatterns = [
     path("review/<uuid:pk>/", ReviewDetailView.as_view(), name="review_detail"),
     path("review/create/", ReviewCreateView.as_view(), name='review_create'),
     path("review/<uuid:pk>/update", ReviewUpdateView.as_view(), name="review_update"),
+
+    path("review/<uuid:review>/comment/", CommentCreateView.as_view(), name='review_comment_create'),
 
     path("review/search/", ReviewSearch.as_view(), name="review_search"),
 ]

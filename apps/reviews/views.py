@@ -39,7 +39,7 @@ class CommentDetailView(LoginRequiredMixin, DetailView):
 class ReviewListView(ListView):
     model = Review
     template_name = "reviews/review_list.html"
-    paginate_by = 2
+    paginate_by = 50
 
     def get_queryset(self):
         return super().get_queryset().order_by('-creation_date')
@@ -50,7 +50,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     fields = ['title', 'content','article_doi']
     template_name = "reviews/review_create.html"
-    success_url = reverse_lazy('review_list')
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -60,7 +60,7 @@ class ReviewUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
     model = Review
     fields = ['title', 'content','article_doi']
     template_name = "reviews/review_update.html"
-    success_url = reverse_lazy('review_list')
+    success_url = reverse_lazy('home')
 
     def test_func(self):
         review = self.get_object()

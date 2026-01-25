@@ -6,9 +6,10 @@
 
     {{ form.as_p }}
 
-    <button type="submit">LOGIN</button>
+    <button type="submit" style="width: fit-content;">LOGIN</button>
 </form>
 
+<p><a href="{% url 'home'%}">Start without account</a></p>
 <p><a href="{% url 'register'%}">Register</a></p>
 
 {% endblock content %}
