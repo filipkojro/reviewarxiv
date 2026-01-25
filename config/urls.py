@@ -20,12 +20,10 @@ from apps.users.views import TestViewUsers, UserDetailView, RegisterView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    
-    path("users/", TestViewUsers.as_view(), name="usersssss"),
+
     path("admin/", admin.site.urls),
 
     path("reviews/", ReviewListView.as_view(), name="review_list"),
-    # path("comments/", CommentListView.as_view(), name="comment_list"),
     
     path("comments/<uuid:pk>/", CommentDetailView.as_view(), name="comment_detail"),
 
