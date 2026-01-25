@@ -29,6 +29,10 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     template_name = "reviews/just_form.html"
     success_url = reverse_lazy('comment_list')
 
+class CommentDetailView(LoginRequiredMixin, DetailView):
+    model = Comment
+    template_name = "reviews/comment_detail.html"
+
 
 class ReviewListView(ListView):
     model = Review
@@ -68,7 +72,7 @@ class ReviewSearch(TemplateView):
         context['query'] = query
 
         if query:
-            reviews = Review.objects.select_related("user").filter(article_doi__icontains=query).order_by("-creation_date")[:20]
+            reviews = Review.objects.select_related("user").prefetch_related("comments","comments__user").filter(article_doi__icontains=query).order_by("-creation_date")[:20]
         else:
             reviews = None
 

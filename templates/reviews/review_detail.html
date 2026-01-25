@@ -11,7 +11,7 @@
 <p>{{object.creation_date}}</p>
 
 <ul>
-    {% for comment in object.comments.all%}
+    {% for comment in comments %}
     <li>{{comment.content}} - {{comment.user}}</li>
     {% endfor %}
 </ul>
