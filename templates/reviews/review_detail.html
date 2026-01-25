@@ -5,15 +5,11 @@
 <h2>{{object.title}}</h2>
 <small>
     <a href="" class="secondary">{{object.user.username}}</a> | 
-    <a href="https://{{object.article_doi}}">{{review.article_doi}}</a>
+    <a href="{{object.article_doi}}">{{review.article_doi}}</a>
 </small>
 <p>{{object.user}}</p>
 <p>{{object.creation_date}}</p>
 
-<ul>
-    {% for comment in comments %}
-    <li>{{comment.content}} - {{comment.user}}</li>
-    {% endfor %}
-</ul>
+<h3>comments</h3>
 
 {% endblock content %}

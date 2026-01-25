@@ -34,9 +34,29 @@ class CommentDetailView(LoginRequiredMixin, DetailView):
     template_name = "reviews/comment_detail.html"
 
 
+
+
 class ReviewListView(ListView):
     model = Review
     template_name = "reviews/review_list.html"
+    paginate_by = 2
+
+    def get_queryset(self):
+        direction = self.request.GET.get("direction", "desc")
+        queryset = super().get_queryset()
+
+        if direction == "asc":
+             return queryset.order_by('creation_date')
+        elif direction == "desc":
+            return queryset.order_by('-creation_date')
+
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_direction'] = self.request.GET.get("direction", "desc")
+        return context
+
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
@@ -72,7 +92,7 @@ class ReviewSearch(TemplateView):
         context['query'] = query
 
         if query:
-            reviews = Review.objects.select_related("user").prefetch_related("comments","comments__user").filter(article_doi__icontains=query).order_by("-creation_date")[:20]
+            reviews = Review.objects.select_related("user").filter(article_doi__icontains=query).order_by("-creation_date")[:20]
         else:
             reviews = None
 

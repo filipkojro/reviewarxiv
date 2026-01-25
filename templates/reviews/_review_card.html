@@ -4,7 +4,7 @@
     </a>
     <small>
         <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{review.user.username}}</a> | 
-        <a href="https://{{review.article_doi}}">{{review.article_doi}}</a>
+        <a href="{{review.article_doi}}">{{review.article_doi}}</a>
     </small>
 
     <p>{{review.content}}</p>

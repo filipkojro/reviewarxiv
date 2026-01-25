@@ -4,36 +4,33 @@
 
 <h2>Lista Recenzji</h2>
 {% if object_list %}
-    <table>
-        <thead>
-            <tr>
-                <th>Tytuł</th>
-                <th>DOI Artykułu</th>
-                <th>Autor</th>
-                <th>Głosy</th>
-                <th>Data Utworzenia</th>
-                <th>Akcje</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for review in object_list %}
-            <tr>
-                <td>{{ review.title }}</td>
-                <td>{{ review.article_doi }}</td>
-                <td>{{ review.user|default:"Nieznany" }}</td>
-                <td>{{ review.votes_count }}</td>
-                <td>{{ review.creation_date|date:"d.m.Y H:i" }}</td>
-                <td>
-                    <a href="{% url 'review_detail' pk=review.pk %}">Szczegóły</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<form method="get">
+    <select name="direction" onchange="this.form.submit()" style="width: fit-content;">
+        <option value="asc" {% if current_direction=='asc' %}selected{% endif %}>ascending</option>
+        <option value="desc" {% if current_direction=='desc' %}selected{% endif %}>descending</option>
+    </select>
+</form>
+
+{% for review in object_list %}
+{% include "reviews/_review_card.html" with review=review user=user%}
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&direction={{ current_direction }}">previous</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&direction={{ current_direction }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+
 {% else %}
-    <p>Brak recenzji</p>
+<p>Brak recenzji</p>
 {% endif %}
-
-<a href="{% url 'review_create' %}" role="button">Dodaj Nową Recenzję</a>
-
 {% endblock content %}
