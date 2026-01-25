@@ -1,0 +1,13 @@
+<article>
+    <small>
+        <a href="{% url 'user_detail' comment.user.username %}" class="secondary">{{comment.user.username}}</a>
+    </small>
+
+    <p>{{comment.content}}</p>
+        <div>
+            <a href="{% url 'comment_create' %}" class="contrast">Discuss</a>
+            {% if comment.user == user %}
+            <a href="{% url 'review_update' review.pk %}" class="contrast">Edit</a>
+            {% endif %}
+        </div>
+</article>

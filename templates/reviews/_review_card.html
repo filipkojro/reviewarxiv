@@ -3,11 +3,20 @@
         <h3>{{review.title}}</h3>
     </a>
     <small>
-        <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{review.user.username}}</a> | 
         <a href="{{review.article_doi}}">{{review.article_doi}}</a>
     </small>
 
     <p>{{review.content}}</p>
+
+    <small>
+        <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{review.user.username}}</a>
+        {% if review.has_beed_edited %}
+            updated {{review.update_date}}
+        {% else %}
+        created {{review.creation_date}}
+        {% endif %}
+    </small>
+
         <div>
             <a href="{% url 'comment_create' %}" class="contrast">Comments</a>
             {% if review.user == user %}

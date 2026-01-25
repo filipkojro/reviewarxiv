@@ -12,4 +12,12 @@
 
 <h3>comments</h3>
 
+{% for comment in object.comments.all %}
+
+<p>{{comment.content}}</p>
+
+{% include "reviews/_comment_card.html" with comment=comment user=user%}
+
+{% endfor %}
+
 {% endblock content %}

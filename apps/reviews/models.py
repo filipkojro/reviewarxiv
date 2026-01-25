@@ -21,6 +21,8 @@ class Review(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
+    has_beed_edited = models.BooleanField(default=False)
+
     def __str__(self):
         return f"{self.title} - {self.user}"
     

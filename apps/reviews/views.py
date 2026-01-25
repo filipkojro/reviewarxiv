@@ -65,10 +65,18 @@ class ReviewUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
     def test_func(self):
         review = self.get_object()
         return self.request.user == review.user
+    
+    def form_valid(self, form):
+        form.instance.has_beed_edited = True
+
+        return super().form_valid(form)
 
 class ReviewDetailView(LoginRequiredMixin, DetailView):
     model = Review
     template_name = 'reviews/review_detail.html'
+
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related("comments")
 
 class ReviewSearch(TemplateView):
     template_name = "reviews/review_search.html"
