@@ -23,9 +23,13 @@
 <a href="{% url 'review_update' object.pk %}" class="contrast">Edit</a>
 {% endif %}
 
-<h3>Comments</h3>
+<h3>Comment</h3>
 
-<a href="{% url 'review_comment_create' object.pk %}" role="button">Add comment</a>
+
+
+<h3>Discussion</h3>
+
+<a href="#" role="button">Discuss</a>
 
 {% for comment in object.comments.all %}
 

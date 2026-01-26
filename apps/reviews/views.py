@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
+from django.db.models import Prefetch
 from .models import Review, Comment
 
 from rest_framework import viewsets
@@ -60,7 +61,7 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
 
 class CommentDetailView(LoginRequiredMixin, DetailView):
     model = Comment
-    template_name = "reviews/comment_detail.html"
+    template_name = "reviews/discussion_detail.html"
 
 
 class ReviewListView(ListView):
@@ -104,7 +105,10 @@ class ReviewDetailView(LoginRequiredMixin, DetailView):
     template_name = "reviews/review_detail.html"
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related("comments")
+        return super().get_queryset().prefetch_related(Prefetch(
+            "comments",
+            queryset=Comment.objects.filter(parent=None).order_by("-creation_date")
+        ))
 
 
 class ReviewSearch(TemplateView):

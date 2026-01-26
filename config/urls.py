@@ -94,6 +94,7 @@ urlpatterns = [
         CommentUpdateView.as_view(),
         name="review_comment_update",
     ),
+    path("discussion/<uuid:pk>/", CommentDetailView.as_view(), name="discussion"),
     path("review/search/", ReviewSearch.as_view(), name="review_search"),
     path("api/v1/", include(api_urlpatterns)),
 ]
