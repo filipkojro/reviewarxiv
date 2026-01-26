@@ -1,4 +1,4 @@
-# reviewarxiv
+# ReviewArxiv
 
 website to comment on papers
 
