@@ -1,6 +1,6 @@
 # ReviewArxiv
 
-website to comment on papers
+Website to comment on papers
 
 ### localhost links
 
