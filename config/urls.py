@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from apps.reviews.views import (
     HomePageView,
@@ -13,11 +14,16 @@ from apps.reviews.views import (
     CommentCreateView,
     CommentDetailView,
     CommentUpdateView,
+
+    ReviewListAPIView,
     )
 
 from apps.users.views import TestViewUsers, UserDetailView, RegisterView
 
 from django.contrib.auth import views as auth_views
+
+router = DefaultRouter()
+router.register("reviews", ReviewListAPIView, basename='review')
 
 urlpatterns = [
 
@@ -51,4 +57,6 @@ urlpatterns = [
     path("review/<uuid:review>/<uuid:pk>/", CommentUpdateView.as_view(), name='review_comment_update'),
 
     path("review/search/", ReviewSearch.as_view(), name="review_search"),
+
+    path("api/v1/", include(router.urls)),
 ]

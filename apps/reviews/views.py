@@ -5,6 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
 from .models import Review, Comment
 import uuid
+
+from rest_framework import viewsets
+from .serializers import ReviewSerializer
+
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = "reviews/home.html"
@@ -120,3 +124,8 @@ class ReviewSearch(TemplateView):
         context['reviews'] = reviews
 
         return context
+    
+
+class ReviewListAPIView(viewsets.ModelViewSet):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all().select_related('user')
