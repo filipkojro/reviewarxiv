@@ -22,8 +22,26 @@ from apps.users.views import TestViewUsers, UserDetailView, RegisterView
 
 from django.contrib.auth import views as auth_views
 
-router = DefaultRouter()
-router.register("reviews", ReviewListAPIView, basename='review')
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+APIrouter = DefaultRouter()
+APIrouter.register("reviews", ReviewListAPIView, basename='review')
+
+api_urlpatterns = [
+    path("", include(APIrouter.urls)),
+    # Spectacular
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "schema/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
+]
 
 urlpatterns = [
 
@@ -58,5 +76,5 @@ urlpatterns = [
 
     path("review/search/", ReviewSearch.as_view(), name="review_search"),
 
-    path("api/v1/", include(router.urls)),
+    path("api/v1/", include(api_urlpatterns)),
 ]

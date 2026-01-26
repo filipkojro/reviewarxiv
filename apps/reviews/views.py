@@ -127,5 +127,9 @@ class ReviewSearch(TemplateView):
     
 
 class ReviewListAPIView(viewsets.ModelViewSet):
+    """
+    List of reviews from RevewArxiv
+    """
+
     serializer_class = ReviewSerializer
     queryset = Review.objects.all().select_related('user')
