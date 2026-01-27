@@ -23,53 +23,6 @@ class HomePageView(TemplateView):
         return context
 
 
-class CommentListView(ListView):
-    model = Comment
-    template_name = "reviews/comment_list.html"
-
-
-class CommentCreateView(LoginRequiredMixin, CreateView):
-    model = Comment
-    fields = ["content"]
-    template_name = "reviews/comment_create.html"
-
-    def form_valid(self, form):
-        review_uuid = self.kwargs["review"]
-
-        form.instance.review = get_object_or_404(Review, pk=review_uuid)
-
-        form.instance.user = self.request.user
-
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("review_detail", kwargs={"pk": self.kwargs["review"]})
-
-
-class CommentUpdateView(LoginRequiredMixin, UpdateView):
-    model = Comment
-    fields = ["content"]
-    template_name = "reviews/comment_create.html"
-
-    def get_success_url(self):
-        return reverse("review_detail", kwargs={"pk": self.kwargs["review"]})
-
-    def form_valid(self, form):
-        form.instance.has_beed_edited = True
-        return super().form_valid(form)
-
-
-class CommentDetailView(LoginRequiredMixin, DetailView):
-    model = Comment
-    template_name = "reviews/discussion_detail.html"
-
-class CommentDeleteView(LoginRequiredMixin, DeleteView):
-    model = Comment
-    template_name = "reviews/delete_confirm.html"
-
-    success_url = '/'
-
-
 class ReviewListView(ListView):
     model = Review
     template_name = "reviews/review_list.html"
@@ -144,6 +97,97 @@ class ReviewSearch(TemplateView):
 
         return context
 
+
+class CommentListView(ListView):
+    model = Comment
+    template_name = "reviews/comment_list.html"
+
+
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ["content"]
+    template_name = "reviews/comment_create.html"
+
+    def form_valid(self, form):
+        review_uuid = self.kwargs["review"]
+
+        form.instance.review = get_object_or_404(Review, pk=review_uuid)
+
+        form.instance.user = self.request.user
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        print(self.request.POST.get('next', "/"))
+        return self.request.POST.get('next', "/")
+
+class CommentDetailView(LoginRequiredMixin, DetailView):
+    model = Comment
+    template_name = "reviews/discussion_detail.html"
+
+class CommentUpdateView(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = ["content"]
+    template_name = "reviews/comment_create.html"
+
+    def form_valid(self, form):
+        form.instance.has_beed_edited = True
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return self.request.POST.get('next', "/")
+
+
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Comment
+    template_name = "reviews/delete_confirm.html"
+
+    def get_success_url(self):
+        return self.request.POST.get('next', "/")
+
+
+
+
+class DiscussionView(TemplateView):
+    template_name = "reviews/discussion_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        comment_uuid = self.kwargs["parent"]
+
+        comment = get_object_or_404(
+            Comment.objects.select_related("review", "user"), pk=comment_uuid
+        )
+
+        discussion = Comment.objects.filter(parent=comment)
+
+        context["review"] = comment.review
+        context["comment"] = comment
+        context["discussion"] = discussion
+
+        return context
+
+class DiscussionCommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ["content"]
+    template_name = "reviews/comment_create.html"
+
+    def form_valid(self, form):
+        parent_uuid = self.kwargs["parent"]
+
+        parent = get_object_or_404(Comment, pk=parent_uuid)
+
+        form.instance.parent = parent
+
+        form.instance.review = get_object_or_404(Review, pk=parent.review.pk)
+
+        form.instance.user = self.request.user
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("discussion", kwargs={"parent": self.kwargs["parent"]})
 
 class ReviewListAPIView(viewsets.ModelViewSet):
     """

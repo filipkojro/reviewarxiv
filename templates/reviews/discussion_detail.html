@@ -2,38 +2,48 @@
 
 {% block content %}
 
-<h2>{{object.title}}</h2>
+<h2>{{review.title}}</h2>
 
 <small>
-    About: <a href="{{review.article_doi}}">{{object.article_doi}}</a>
+    About: <a href="{{review.article_doi}}">{{review.article_doi}}</a>
 </small>
 
-<p>{{object.content}}</p>
+<p>{{review.content}}</p>
 
 <small>
-    <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{object.user.username}}</a>
-    {% if object.has_beed_edited %}
-    updated {{object.update_date}}
+    <a href="{% url 'user_detail' review.user.username %}" class="secondary">{{review.user.username}}</a>
+    {% if review.has_beed_edited %}
+    updated {{review.update_date}}
     {% else %}
-    created {{object.creation_date}}
+    created {{review.creation_date}}
     {% endif %}
 </small>
 
-{% if object.user == user %}
-<a href="{% url 'review_update' object.pk %}" class="contrast">Edit</a>
+{% if review.user == user %}
+<a href="{% url 'review_update' review.pk %}" class="contrast">Edit</a>
+<a href="{% url 'review_delete' review.pk %}" class="contrast" style="padding-left: 1rem;">Delete</a>
 {% endif %}
 
 <h3>Comment</h3>
 
+<p>{{comment.content}}</p>
 
+<small>
+    <a href="{% url 'user_detail' comment.user.username %}" class="secondary">{{comment.user.username}}</a>
+    {% if comment.has_beed_edited %}
+    updated {{comment.update_date}}
+    {% else %}
+    created {{comment.creation_date}}
+    {% endif %}
+</small>
 
 <h3>Discussion</h3>
 
-<a href="#" role="button">Discuss</a>
+<a href="{% url 'discussion_comment' comment.pk%}" role="button">Discuss</a>
 
-{% for comment in object.comments.all %}
+{% for comment in discussion %}
 
-{% include "reviews/_comment_card.html" with comment=comment user=user%}
+{% include "reviews/_discussion_comment_card.html" with comment=comment user=user%}
 
 {% endfor %}
 

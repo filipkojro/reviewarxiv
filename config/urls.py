@@ -14,6 +14,8 @@ from apps.reviews.views import (
     CommentDetailView,
     CommentUpdateView,
     CommentDeleteView,
+    DiscussionView,
+    DiscussionCommentCreateView,
     ReviewListAPIView,
 )
 
@@ -48,10 +50,6 @@ api_urlpatterns = [
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("reviews/", ReviewListView.as_view(), name="review_list"),
-    path("comments/<uuid:pk>/", CommentDetailView.as_view(), name="comment_detail"),
-    path("comments/<uuid:pk>/confirm", CommentDeleteView.as_view(), name="comment_delete"),
-    path("register/", RegisterView.as_view(), name="register"),
     path("login/", auth_views.LoginView.as_view(), name="login"),
     path("logged_out/", auth_views.LogoutView.as_view(), name="logout"),
     path(
@@ -83,6 +81,10 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path("", HomePageView.as_view(), name="home"),
+    path("reviews/", ReviewListView.as_view(), name="review_list"),
+    path("comments/<uuid:pk>/", CommentDetailView.as_view(), name="comment_detail"),
+    path("comments/<uuid:pk>/confirm", CommentDeleteView.as_view(), name="comment_delete"),
+    path("register/", RegisterView.as_view(), name="register"),
     path("user/<str:username>/", UserDetailView.as_view(), name="user_detail"),
     path("review/<uuid:pk>/", ReviewDetailView.as_view(), name="review_detail"),
     path("review/create/", ReviewCreateView.as_view(), name="review_create"),
@@ -98,7 +100,8 @@ urlpatterns = [
         CommentUpdateView.as_view(),
         name="review_comment_update",
     ),
-    path("discussion/<uuid:pk>/", CommentDetailView.as_view(), name="discussion"),
+    path("discussion/<uuid:parent>/", DiscussionView.as_view(), name="discussion"),
+    path("discussion/<uuid:parent>/comment", DiscussionCommentCreateView.as_view(), name="discussion_comment"),
     path("review/search/", ReviewSearch.as_view(), name="review_search"),
     path("api/v1/", include(api_urlpatterns)),
 ]

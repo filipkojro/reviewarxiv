@@ -27,7 +27,7 @@
 
 <h3>Comments</h3>
 
-<a href="{% url 'review_comment_create' object.pk %}" role="button">Add comment</a>
+<a href="{% url 'review_comment_create' object.pk %}?next={{request.path|urlencode}}" role="button">Add comment</a>
 
 {% for comment in object.comments.all %}
 
