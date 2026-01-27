@@ -24,6 +24,8 @@
 <a href="{% url 'review_delete' review.pk %}" class="contrast" style="padding-left: 1rem;">Delete</a>
 {% endif %}
 
+<hr>
+
 <h3>Comment</h3>
 
 <p>{{comment.content}}</p>
@@ -36,6 +38,8 @@
     created {{comment.creation_date}}
     {% endif %}
 </small>
+
+<hr>
 
 <h3>Discussion</h3>
 
