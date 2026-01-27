@@ -65,7 +65,7 @@ class CommentDetailView(LoginRequiredMixin, DetailView):
 
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
-    template_name = "reviews/comment_delete_confirm.html"
+    template_name = "reviews/delete_confirm.html"
 
     success_url = '/'
 
@@ -116,6 +116,11 @@ class ReviewDetailView(LoginRequiredMixin, DetailView):
             queryset=Comment.objects.filter(parent=None).order_by("-creation_date")
         ))
 
+class ReviewDeleteView(LoginRequiredMixin, DeleteView):
+    model = Review
+    template_name = "reviews/delete_confirm.html"
+
+    success_url = '/'
 
 class ReviewSearch(TemplateView):
     template_name = "reviews/review_search.html"

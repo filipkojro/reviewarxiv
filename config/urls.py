@@ -8,6 +8,7 @@ from apps.reviews.views import (
     ReviewCreateView,
     ReviewUpdateView,
     ReviewListView,
+    ReviewDeleteView,
     ReviewSearch,
     CommentCreateView,
     CommentDetailView,
@@ -85,6 +86,7 @@ urlpatterns = [
     path("user/<str:username>/", UserDetailView.as_view(), name="user_detail"),
     path("review/<uuid:pk>/", ReviewDetailView.as_view(), name="review_detail"),
     path("review/create/", ReviewCreateView.as_view(), name="review_create"),
+    path("review/<uuid:pk>/confirm", ReviewDeleteView.as_view(), name="review_delete"),
     path("review/<uuid:pk>/update", ReviewUpdateView.as_view(), name="review_update"),
     path(
         "review/<uuid:review>/comment/",
