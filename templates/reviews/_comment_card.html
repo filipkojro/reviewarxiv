@@ -13,6 +13,7 @@
             <a href="{% url 'discussion' comment.pk %}" class="contrast">Discussion</a>
             {% if comment.user == user %}
             <a href="{% url 'review_comment_update' comment.review.pk comment.pk %}" class="contrast">Edit</a>
+            <a href="{% url 'comment_delete' comment.pk %}" class="contrast">Remove</a>
             {% endif %}
         </div>
 </article>

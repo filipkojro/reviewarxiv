@@ -1,0 +1,15 @@
+{% extends "reviews/base.html" %}
+
+{% block content %}
+
+<h2>Are you sure u want to delete?</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit" style="width: fit-content;">yes</button>
+</form>
+
+{% endblock content %}

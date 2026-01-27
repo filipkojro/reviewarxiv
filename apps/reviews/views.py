@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
@@ -62,6 +62,12 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
 class CommentDetailView(LoginRequiredMixin, DetailView):
     model = Comment
     template_name = "reviews/discussion_detail.html"
+
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Comment
+    template_name = "reviews/comment_delete_confirm.html"
+
+    success_url = '/'
 
 
 class ReviewListView(ListView):
