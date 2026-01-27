@@ -4,6 +4,9 @@
 <head>
     <title>ReviewArxiv</title>
 
+    {% load static %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.blue.min.css">
 
     {% block headers %}{% endblock headers %}
@@ -12,9 +15,14 @@
 <body class="container">
     <nav>
         <ul>
-            <li><a href="{% url 'home' %}" class="contrast">
-                    <h1>ReviewArxiv</h1>
-                </a></li>
+            <li style="margin: auto;">
+                <img src="{% static 'images/ReviewArxivLogo.png' %}" style="width: 2rem;">
+            </li>
+            <li>
+                <a href="{% url 'home' %}" class="contrast">
+                    <h1 style="margin: auto;">ReviewArxiv</h1>
+                </a>
+            </li>
         </ul>
         {% if user.is_authenticated %}
         <ul>
