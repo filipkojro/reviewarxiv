@@ -46,8 +46,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Review
     fields = ["title", "content", "article_doi"]
-    template_name = "reviews/review_update.html"
-    success_url = reverse_lazy("home")
+    template_name = "reviews/review_update.html"  
 
     def test_func(self):
         review = self.get_object()
@@ -57,6 +56,9 @@ class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form.instance.has_beed_edited = True
 
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return self.request.POST.get('next', "/")
 
 
 class ReviewDetailView(LoginRequiredMixin, DetailView):
@@ -73,7 +75,7 @@ class ReviewDeleteView(LoginRequiredMixin, DeleteView):
     model = Review
     template_name = "reviews/delete_confirm.html"
 
-    success_url = '/'
+    success_url = reverse_lazy("home")  
 
 class ReviewSearch(TemplateView):
     template_name = "reviews/review_search.html"
@@ -118,7 +120,6 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        print(self.request.POST.get('next', "/"))
         return self.request.POST.get('next', "/")
 
 class CommentDetailView(LoginRequiredMixin, DetailView):

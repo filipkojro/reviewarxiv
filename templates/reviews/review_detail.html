@@ -21,7 +21,7 @@
 
 {% if object.user == user %}
 <br>
-<a href="{% url 'review_update' object.pk %}" class="contrast">Edit</a>
+<a href="{% url 'review_update' object.pk %}?next={{request.path|urlencode}}" class="contrast">Edit</a>
 <a href="{% url 'review_delete' object.pk %}" class="contrast" style="padding-left: 1rem;">Delete</a>
 {% endif %}
 

@@ -20,7 +20,7 @@
 </small>
 
 {% if review.user == user %}
-<a href="{% url 'review_update' review.pk %}" class="contrast">Edit</a>
+<a href="{% url 'review_update' review.pk %}?next={{request.path|urlencode}}" class="contrast">Edit</a>
 <a href="{% url 'review_delete' review.pk %}" class="contrast" style="padding-left: 1rem;">Delete</a>
 {% endif %}
 
