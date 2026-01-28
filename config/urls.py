@@ -83,7 +83,9 @@ urlpatterns = [
     path("", HomePageView.as_view(), name="home"),
     path("reviews/", ReviewListView.as_view(), name="review_list"),
     path("comments/<uuid:pk>/", CommentDetailView.as_view(), name="comment_detail"),
-    path("comments/<uuid:pk>/confirm", CommentDeleteView.as_view(), name="comment_delete"),
+    path(
+        "comments/<uuid:pk>/confirm", CommentDeleteView.as_view(), name="comment_delete"
+    ),
     path("register/", RegisterView.as_view(), name="register"),
     path("user/<str:username>/", UserDetailView.as_view(), name="user_detail"),
     path("review/<uuid:pk>/", ReviewDetailView.as_view(), name="review_detail"),
@@ -101,7 +103,11 @@ urlpatterns = [
         name="review_comment_update",
     ),
     path("discussion/<uuid:parent>/", DiscussionView.as_view(), name="discussion"),
-    path("discussion/<uuid:parent>/comment", DiscussionCommentCreateView.as_view(), name="discussion_comment"),
+    path(
+        "discussion/<uuid:parent>/comment",
+        DiscussionCommentCreateView.as_view(),
+        name="discussion_comment",
+    ),
     path("review/search/", ReviewSearch.as_view(), name="review_search"),
     path("api/v1/", include(api_urlpatterns)),
 ]

@@ -1,5 +1,11 @@
 from django.views.generic import TemplateView
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404
@@ -46,7 +52,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Review
     fields = ["title", "content", "article_doi"]
-    template_name = "reviews/review_update.html"  
+    template_name = "reviews/review_update.html"
 
     def test_func(self):
         review = self.get_object()
@@ -56,9 +62,9 @@ class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         form.instance.has_beed_edited = True
 
         return super().form_valid(form)
-    
+
     def get_success_url(self):
-        return self.request.POST.get('next', "/")
+        return self.request.POST.get("next", "/")
 
 
 class ReviewDetailView(LoginRequiredMixin, DetailView):
@@ -66,16 +72,30 @@ class ReviewDetailView(LoginRequiredMixin, DetailView):
     template_name = "reviews/review_detail.html"
 
     def get_queryset(self):
-        return super().get_queryset().prefetch_related(Prefetch(
-            "comments",
-            queryset=Comment.objects.filter(parent=None).order_by("-creation_date")
-        ))
+        return (
+            super()
+            .get_queryset()
+            .prefetch_related(
+                Prefetch(
+                    "comments",
+                    queryset=Comment.objects.filter(parent=None).order_by(
+                        "-creation_date"
+                    ),
+                )
+            )
+        )
 
-class ReviewDeleteView(LoginRequiredMixin, DeleteView):
+
+class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Review
     template_name = "reviews/delete_confirm.html"
 
-    success_url = reverse_lazy("home")  
+    success_url = reverse_lazy("home")
+
+    def test_func(self):
+        review = self.get_object()
+        return self.request.user == review.user
+
 
 class ReviewSearch(TemplateView):
     template_name = "reviews/review_search.html"
@@ -120,13 +140,15 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return self.request.POST.get('next', "/")
+        return self.request.POST.get("next", "/")
+
 
 class CommentDetailView(LoginRequiredMixin, DetailView):
     model = Comment
     template_name = "reviews/discussion_detail.html"
 
-class CommentUpdateView(LoginRequiredMixin, UpdateView):
+
+class CommentUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ["content"]
     template_name = "reviews/comment_create.html"
@@ -134,19 +156,25 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.has_beed_edited = True
         return super().form_valid(form)
-    
+
     def get_success_url(self):
-        return self.request.POST.get('next', "/")
+        return self.request.POST.get("next", "/")
+    
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.user
 
 
-class CommentDeleteView(LoginRequiredMixin, DeleteView):
+class CommentDeleteView(LoginRequiredMixin,UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = "reviews/delete_confirm.html"
 
     def get_success_url(self):
-        return self.request.POST.get('next', "/")
-
-
+        return self.request.POST.get("next", "/")
+    
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.user
 
 
 class DiscussionView(TemplateView):
@@ -169,7 +197,8 @@ class DiscussionView(TemplateView):
 
         return context
 
-class DiscussionCommentCreateView(LoginRequiredMixin, CreateView):
+
+class DiscussionCommentCreateView(LoginRequiredMixin,UserPassesTestMixin, CreateView):
     model = Comment
     fields = ["content"]
     template_name = "reviews/comment_create.html"
@@ -189,6 +218,11 @@ class DiscussionCommentCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse("discussion", kwargs={"parent": self.kwargs["parent"]})
+    
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.user
+
 
 class ReviewListAPIView(viewsets.ModelViewSet):
     """
