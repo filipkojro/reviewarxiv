@@ -148,7 +148,7 @@ class CommentDetailView(LoginRequiredMixin, DetailView):
     template_name = "reviews/discussion_detail.html"
 
 
-class CommentUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ["content"]
     template_name = "reviews/comment_create.html"
@@ -159,19 +159,19 @@ class CommentUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         return self.request.POST.get("next", "/")
-    
+
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.user
 
 
-class CommentDeleteView(LoginRequiredMixin,UserPassesTestMixin, DeleteView):
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
     template_name = "reviews/delete_confirm.html"
 
     def get_success_url(self):
         return self.request.POST.get("next", "/")
-    
+
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.user
@@ -198,7 +198,7 @@ class DiscussionView(TemplateView):
         return context
 
 
-class DiscussionCommentCreateView(LoginRequiredMixin,UserPassesTestMixin, CreateView):
+class DiscussionCommentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Comment
     fields = ["content"]
     template_name = "reviews/comment_create.html"
@@ -218,7 +218,7 @@ class DiscussionCommentCreateView(LoginRequiredMixin,UserPassesTestMixin, Create
 
     def get_success_url(self):
         return reverse("discussion", kwargs={"parent": self.kwargs["parent"]})
-    
+
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.user
